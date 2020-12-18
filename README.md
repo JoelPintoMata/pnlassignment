@@ -20,3 +20,7 @@ curl localhost:8080/apaFunction -H "Content-Type: text/plain" -d "<some_id>"
 ```
 mvn clean test
 ```
+
+## Overall architecture
+Where does this service fit in the overall architecture?
+![img.png](img.png)
