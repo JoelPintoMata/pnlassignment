@@ -49,6 +49,9 @@ What are your observations concerning the attached code example? Include a list 
       On query check for query on a cache. If not present:
       Calculate and retrieve aggregate
       Cache new aggregate
+      
+- Others
+    - Replace XML with JSON - easier to parse, humanly readable
 
 In case your proposed changes involve consumer impact please describe how to handle this in your coding, testing and deployment strategy.
 
