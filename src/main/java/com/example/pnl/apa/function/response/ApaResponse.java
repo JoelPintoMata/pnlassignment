@@ -12,6 +12,11 @@ public class ApaResponse {
     @JsonProperty("Product")
     private List<Product> products;
 
+    public ApaResponse() {
+        this.setTotaal(new Totaal());
+        this.setProducts(new ArrayList<>());
+    }
+
     /**
      * Gets the value of the totaal property.
      *
