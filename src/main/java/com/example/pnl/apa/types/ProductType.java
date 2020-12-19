@@ -1,5 +1,8 @@
 package com.example.pnl.apa.types;
 
+/**
+ * An enumerator of accepted product types
+ */
 public enum ProductType {
     PRODUCT_AGT("AGT"),
     PRODUCT_BBPX("BBPX"),
