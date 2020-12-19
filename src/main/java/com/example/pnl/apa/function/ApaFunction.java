@@ -2,6 +2,7 @@ package com.example.pnl.apa.function;
 
 import com.example.pnl.apa.function.response.ApaResponse;
 import com.example.pnl.apa.service.ApaService;
+import com.example.pnl.util.Sanitizer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -29,6 +30,7 @@ public class ApaFunction implements UnaryOperator<String> {
         String result = null;
         try {
             result = objectMapper.writeValueAsString(apaResponse);
+            result = Sanitizer.sanitize(result);
         } catch (JsonProcessingException e) {
             LOGGER.error("Could not generate reply for id: {}", id, e);
         }

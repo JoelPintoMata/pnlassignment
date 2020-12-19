@@ -50,4 +50,5 @@ public class ApaFunctionTest extends BaseTest {
         Assert.assertEquals(apaResponse.getProducts().size(), apaResponseFromFunction.getProducts().size());
         Assert.assertEquals(apaResponse.getProducts().get(0).getAantal(), apaResponseFromFunction.getProducts().get(0).getAantal());
     }
+
 }
