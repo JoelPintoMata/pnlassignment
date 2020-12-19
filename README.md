@@ -45,10 +45,10 @@ What are your observations concerning the attached code example? Include a list 
       Make ApaResponse properties private and create new public (protected?) setters
 
 - Performance
-    - Create new de-normalizer table with an index on `postal-code`, `house number`, `huisnrtvg`(?) and `ingangsdt`(?)
-      On query check for query on a cache. If not present:
-      Calculate and retrieve aggregate
-      Cache new aggregate
+    - Maintain a new de-normalizer table with an index on `postal-code`, `house number`, `huisnrtvg` and `ingangsdt`
+      
+- Security
+    - Sanitize JSON output via OWASP security checker
       
 - Others
     - Replace XML with JSON - easier to parse, humanly readable
