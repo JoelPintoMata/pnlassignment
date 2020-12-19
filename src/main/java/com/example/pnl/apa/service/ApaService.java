@@ -2,12 +2,11 @@ package com.example.pnl.apa.service;
 
 import com.example.pnl.adresmeldingcountid.dto.AdresMeldingCountIdDTO;
 import com.example.pnl.apa.function.response.ApaResponse;
+import com.example.pnl.apa.function.response.Product;
 import com.example.pnl.otrapplicationparameter.dao.OtrApplicationParameterDAO;
 import com.example.pnl.pakketten.dao.PakkettenDAO;
 import com.example.pnl.pakketten.model.Pakketten;
 import com.example.pnl.util.AdresMeldingCountIdAssembler;
-import com.example.pnl.apa.function.response.Product;
-import com.example.pnl.apa.function.response.Totaal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,7 @@ public class ApaService {
                       PakkettenDAO pakkettenDAO) {
         this.pakkettenDAO = pakkettenDAO;
 
-        // Retrieve this service configuration properties
+        // Retrieve this service instance configuration properties
         otrApplicationParameterDAO.getProductType().ifPresent(x -> agt = x);
     }
 
@@ -43,8 +42,6 @@ public class ApaService {
      */
     public ApaResponse getApaData(String id) {
         ApaResponse apaResponse = new ApaResponse();
-        apaResponse.setTotaal(new Totaal());
-        apaResponse.setProducts(new ArrayList<>());
 
         List<Pakketten> pakkettenList = getPakketen(id);
 
@@ -77,11 +74,11 @@ public class ApaService {
     /**
      * Adds a new product to a {@link ApaResponse}
      * @param apaResponse an ApaResponse
-     * @param totaal the total value
-     * @param up
+     * @param totaal the total value for the given product type
+     * @param timestamp a timestamp
      * @param productType the product type
      */
-    private void addProductToApaResponse(ApaResponse apaResponse, int totaal, Timestamp up, String productType) {
+    private void addProductToApaResponse(ApaResponse apaResponse, int totaal, Timestamp timestamp, String productType) {
         if (totaal > 0) {
             Product product = new Product();
             product.setType(productType);
@@ -89,8 +86,8 @@ public class ApaService {
 
             apaResponse.addProduct(product);
             apaResponse.getTotaal().setAantal(totaal + apaResponse.getTotaal().getAantal());
-            if (up != null) {
-                LocalDateTime localDateTime = up.toLocalDateTime();
+            if (timestamp != null) {
+                LocalDateTime localDateTime = timestamp.toLocalDateTime();
                 product.setBezorgmoment(localDateTime);
                 if (apaResponse.getTotaal().getBezorgmoment() == null
                         || apaResponse.getTotaal().getBezorgmoment().compareTo(localDateTime) > 0) {
