@@ -8,15 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 /**
  * Spring Cloud Function to retrieve a JSON representation of an {@link ApaResponse}
  */
 @Component
-public class ApaFunction implements Function<String, String> {
+public class ApaFunction implements UnaryOperator<String> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApaFunction.class);
 
