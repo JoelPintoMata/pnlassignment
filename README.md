@@ -45,6 +45,7 @@ What are your observations concerning the attached code example? Include a list 
 
 - Performance
     - Maintain a new de-normalizer table with an index on `postal-code`, `house number`, `huisnrtvg` and `ingangsdt`
+    - (not implemented) store in db a pre-rendered JSON reply  
     - Implement ApaResponse service as a Spring Cloud Function cloud (AWS-Lambda) 
       
 - Security
