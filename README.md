@@ -1,7 +1,6 @@
 # Assignment
 ## What?
-Spring Cloud Function aimed at being deployed as a AWS Lambda function.
-Once run it will retun a JSON representation of an ApaResponse.
+Spring Cloud Function to return a JSON representation of an ApaResponse.
 
 ## Dependencies
 - Spring Cloud Functions
@@ -11,7 +10,7 @@ Once run it will retun a JSON representation of an ApaResponse.
 ```
 mvn spring-boot:run
 ```
-, later you can call the function via.
+Later call the function via:
 ```
 curl localhost:8080/apaFunction -H "Content-Type: text/plain" -d "<some_id>"
 ```
@@ -31,18 +30,18 @@ What are your observations concerning the attached code example? Include a list 
 
 - Logging improvements
     - LogFactory.getLog(AantalPakkettenAangetekendService.class) is deprecate
-    - Replace logger to SL4J - without knowing much is a safer bet as i found several libraries to depend on it
+    - Replace logger to SL4J - It is usuaally a safer bet as several libraries to depend on it
     - Add appender for AWS FireHose that will send both to S3 and ElasticSearch (ELK)
     - AantalPakkettenAangetekendServiceImpl make use of loggers special {} variable injection construct
 
 - Code smells
     - A class should only log or throw an Exception: AantalPakkettenAangetekendServiceImpl.init line 48.
     - Remove magic number 14 from method getApaData(String id) line String ingangsdt = minusDaysFromNow(14)
-    - Run Static analyzer and remove code (Intelij Inspect Code, eg.)
-    - Bad OO - Wrong accessor strategy. 
-      ApaResponse.getProduct should not give access to the protected field
-      Add new ApaResponse.addProduct for adding new products
-      Make ApaResponse properties private and create new public (protected?) setters
+    - Run Static analyzer and remove code (Intelij Inspect Code, e.g.)
+    - Bad OO - Wrong accessor strategy.
+      - ApaResponse.getProduct should not give access to the protected field
+      - Add new ApaResponse.addProduct for adding new products
+      - Make ApaResponse properties private and create new public (protected?) setters
 
 - Performance
     - Maintain a new de-normalizer table with an index on `postal-code`, `house number`, `huisnrtvg` and `ingangsdt`
@@ -56,11 +55,22 @@ What are your observations concerning the attached code example? Include a list 
 
 In case your proposed changes involve consumer impact please describe how to handle this in your coding, testing and deployment strategy.
 
-- Update API Gateway Content-Type to application/xml
-- Update API Gateway response body mapping template to:
-  ```
-  #set($inputRoot = $input.path('$'))
-  $inputRoot.body
-  ```
-  The change might not impact on consumers but its a point that requires integration testing.
+- Code changes: 
+  - Update API Gateway Content-Type to application/xml
+  - Update API Gateway response body mapping template to:
+    ```
+    #set($inputRoot = $input.path('$'))
+    $inputRoot.body
+    ```
+  - Update consumers to read the response from inside the `body` JSON object
+  - Update the consumers for a JSON reply
+  
+- Release management
+  - Do canary releases, we can wire the system to route some traffic to the new solution and increase it with time
+  
+- Testing
+  - Integration tests
+  - Regression tests
+
+
 
